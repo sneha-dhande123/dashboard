@@ -15,13 +15,14 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
-          creds: |
-            {
-              "clientId": "c181b93e-f62a-486a-87f7-7be202f48231",
-              "clientSecret": "cf58491e-a810-49f5-a192-4da6c7bf374f",
-              "tenantId": "dcd5a271-f0d5-49c2-811d-5b8d8c13fd8e",
-              "subscriptionId": "84fb61f1-870e-40f7-9463-7f4731f81120"
-            }
+         creds: |
+          {
+            "clientId": "c181b93e-f62a-486a-87f7-7be202f48231",
+            "clientSecret": "cf58491e-a810-49f5-a192-4da6c7bf374f",
+            "tenantId": "dcd5a271-f0d5-49c2-811d-5b8d8c13fd8e",
+            "subscriptionId": "84fb61f1-870e-40f7-9463-7f4731f81120"
+          }
+
         
       - name: Build the Docker image And Pushing in GitOps
         run: |
