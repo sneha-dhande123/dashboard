@@ -27,11 +27,19 @@ jobs:
           git checkout master
           git pull
 
+          # Set up SSH key for Git authentication
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+          # Use SSH URL for Git remote
+          git remote set-url origin git@github.com:sneha-dhande123/Calculator.git
+
           git config user.name "sneha-dhande123"
           git config user.email "sneha789dhande@gmail.com"
-
+          
           yq e '.spec.template.spec.containers[0].image = "acrrepository.azurecr.io/dashboard:latest"' -i Deployment.yaml
-
+          
           git add .
           git commit -m "Updating newer image"
           git push --set-upstream origin master
