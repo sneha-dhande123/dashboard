@@ -1,3 +1,13 @@
+name: Deploy to AKS Cluster
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  GITHUB_TOKEN: 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
+
 jobs:
   production:
     runs-on: ubuntu-latest
