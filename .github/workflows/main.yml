@@ -33,6 +33,7 @@ jobs:
           echo -n "machine github.com login sneha-dhande123 password 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" > ~/.netrc
 
           yq e '.spec.template.spec.containers[0].image = "acrrepository.azurecr.io/dashboard:${{ env.GITHUB_BRANCH }}"' -i Deployment.yaml
+          git remote set-url origin git@github.com:sneha-dhande123/Calculator.git
 
           git add .
           git commit -m "Updating newer image"
