@@ -18,8 +18,10 @@ jobs:
 
       - name: Build and Push Docker image
         run: |
-          docker build -t acrrepository.azurecr.io/calculator:${{ env.GITHUB_BRANCH }} .
-          docker push acrrepository.azurecr.io/calculator:${{ env.GITHUB_BRANCH }}
+         docker build -t acrrepository.azurecr.io/dashboard:${{ env.GITHUB_BRANCH }} .
+         docker push acrrepository.azurecr.io/dashboard:${{ env.GITHUB_BRANCH }}
+  
+
 
           
           git clone https://github.com/sneha-dhande123/Calculator
