@@ -20,17 +20,17 @@ jobs:
         run: |
           docker build -t acrrepository.azurecr.io/dashboard:${{ env.GITHUB_BRANCH }} .
           docker push acrrepository.azurecr.io/dashboard:${{ env.GITHUB_BRANCH }}
-          
+    
           git clone https://github.com/sneha-dhande123/Calculator
           cd Calculator
           git checkout master
           git pull
-          
+    
           git config user.name sneha-dhande123
           git config user.email sneha789dhande@gmail.com
-          
+     
           yq e '.spec.template.spec.containers[0].image = "acrrepository.azurecr.io/dashboard:${{ env.GITHUB_BRANCH }}"' -i Deployment.yaml
-          
+    
           git add .
           git commit -m "Updating newer image"
           git push --set-upstream origin master
