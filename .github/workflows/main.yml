@@ -1,4 +1,5 @@
 name: Deploy to AKS Cluster
+
 on:
   push:
     branches:
@@ -12,27 +13,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Azure CLI Login
-        uses: azure/CLI@v1
-        with:
-          azcliversion: 'latest'
-        run: az login --username "acrrepository" --password "D87PyhU8ipAeLEUolrwldcZHiVblCIjWqf2L22WMAF+ACRDkTq8+ " --tenant "dcd5a271-f0d5-49c2-811d-5b8d8c13fd8e"
+    - name: Azure CLI Login
+      run: |
+        az login --username "acrrepository" --password "D87PyhU8ipAeLEUolrwldcZHiVblCIjWqf2L22WMAF+ACRDkTq8+" --tenant "dcd5a271-f0d5-49c2-811d-5b8d8c13fd8e"
+      env:
+        AZURE_CORE_OUTPUT: table
 
-      - name: Build the Docker image And Pushing in GitOps
-        run: |
-          docker build -t acrrepository.azurecr.io/ .
-          docker push acrrepository.azurecr.io
-          
-          git clone https://github.com/sneha-dhande123/Calculator.git
-          cd Calculator
-          git checkout master
-          git pull
-          
-          git config user.name sneha-dhande123
-          git config user.email sneha789dhande@gmail.com
-          
-          yq e '.spec.template.spec.containers[0].image = "acrrepository.azurecr.io/Calculator:${{ env.GITHUB_BRANCH }}"' -i Deployment.yaml
-          
-          git add .
-          git commit -m "Updating newer image"
-          git push --set-upstream origin master
+    - name: Build the Docker image And Pushing in GitOps
+      run: |
+        docker build -t acrrepository.azurecr.io/ .
+        docker push acrrepository.azurecr.io
+        
+        git clone https://github.com/sneha-dhande123/Calculator
+        cd Calculator
+        git checkout master
+        git pull
+        
+        git config user.name sneha-dhande123
+        git config user.email sneha789dhande@gmail.com
+        
+        yq e '.spec.template.spec.containers[0].image = "acrrepository.azurecr.io/Calculator:${{ env.GITHUB_BRANCH }}"' -i Deployment.yaml
+        
+        git add .
+        git commit -m "Updating newer image"
+        git push --set-upstream origin master
