@@ -25,7 +25,7 @@ jobs:
           git clone https://github.com/sneha-dhande123/Calculator
           cd Calculator
           git checkout master
-          git pull
+      
 
 
           yq e '.spec.template.spec.containers[0].image = "acrrepository.azurecr.io/dashboard:latest"' -i Deployment.yaml
