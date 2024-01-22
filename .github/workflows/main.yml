@@ -20,7 +20,7 @@ jobs:
         run: |
           docker build -t acrrepository.azurecr.io/dashboard:${{ env.GITHUB_BRANCH }} .
           docker push acrrepository.azurecr.io/dashboard:${{ env.GITHUB_BRANCH }}
-    
+
           git clone https://github.com/sneha-dhande123/Calculator
           cd Calculator
           git checkout master
