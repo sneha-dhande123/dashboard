@@ -29,8 +29,8 @@ jobs:
 
 
           yq e '.spec.template.spec.containers[0].image = "acrrepository.azurecr.io/dashboard:latest"' -i Deployment.yaml
-          git config user.name "sneha-dhande123"
-          git config user.email "sneha789dhande@gmail.com"
+          git config --global user.name "sneha-dhande123"
+          git config --global user.email "sneha789dhande@gmail.com"
 
 
           git add .
