@@ -18,7 +18,8 @@ jobs:
 
       - name: Build and Push Docker image
         run: |
-          docker build -t acrrepository.azurecr.io/dashboard:latest .
+          docker pull nginx:latest
+          docker tag nginx:latest acrrepository.azurecr.io/dashboard:latest
           docker push acrrepository.azurecr.io/dashboard:latest
 
           git clone https://github.com/sneha-dhande123/Calculator
