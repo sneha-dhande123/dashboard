@@ -5,7 +5,7 @@ on:
     branches:
       - master
 
-env:
+env: 
   GITHUB_TOKEN: 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
   DOCKER_USERNAME: acrrepository
   DOCKER_PASSWORD: D87PyhU8ipAeLEUolrwldcZHiVblCIjWqf2L22WMAF+ACRDkTq8+
