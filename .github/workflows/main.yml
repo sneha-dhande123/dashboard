@@ -16,10 +16,11 @@ jobs:
       - name: Docker Login
         run: docker login -u acrrepository -p D87PyhU8ipAeLEUolrwldcZHiVblCIjWqf2L22WMAF+ACRDkTq8+ acrrepository.azurecr.io
 
-      - name: Build the Docker image And Pushing in GitOps
+      - name: Build and Push Docker image
         run: |
           docker build -t acrrepository.azurecr.io/calculator:${{ env.GITHUB_BRANCH }} .
           docker push acrrepository.azurecr.io/calculator:${{ env.GITHUB_BRANCH }}
+
           
           git clone https://github.com/sneha-dhande123/Calculator
           cd Calculator
