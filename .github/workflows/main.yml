@@ -18,10 +18,8 @@ jobs:
 
       - name: Build and Push Docker image
         run: |
-         docker build -t  .
-         docker push 
-
-
+          docker build -t acrrepository.azurecr.io/dashboard:${{ env.GITHUB_BRANCH }} .
+          docker push acrrepository.azurecr.io/dashboard:${{ env.GITHUB_BRANCH }}
           
           git clone https://github.com/sneha-dhande123/Calculator
           cd Calculator
@@ -31,7 +29,7 @@ jobs:
           git config user.name sneha-dhande123
           git config user.email sneha789dhande@gmail.com
           
-          yq e '.spec.template.spec.containers[0].image = "acrrepository.azurecr.io/calculator:${{ env.GITHUB_BRANCH }}"' -i Deployment.yaml
+          yq e '.spec.template.spec.containers[0].image = "acrrepository.azurecr.io/dashboard:${{ env.GITHUB_BRANCH }}"' -i Deployment.yaml
           
           git add .
           git commit -m "Updating newer image"
