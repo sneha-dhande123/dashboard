@@ -27,15 +27,7 @@ jobs:
           git checkout master
           git pull
 
-          # Set up SSH key for Git authentication
-          mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          eval "$(ssh-agent -s)"
-          ssh-add ~/.ssh/id_rsa || exit 1
 
-          # Use SSH URL for Git remote
-          git remote set-url origin git@github.com:sneha-dhande123/Calculator.git
 
           git config user.name "sneha-dhande123"
           git config user.email "sneha789dhande@gmail.com"
