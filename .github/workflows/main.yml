@@ -20,7 +20,7 @@ jobs:
 
       - name: Build and Push Docker image
         run: |
-          docker build -t acrrepository.azurecr.io/dashboard:latest .
+          docker build -t acrrepository.azurecr.io/dashboard:latest -f dashboard/Dockerfile .
           docker push acrrepository.azurecr.io/dashboard:latest
 
           git clone https://github.com/sneha-dhande123/Calculator
