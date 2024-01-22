@@ -30,6 +30,8 @@ jobs:
           git config user.name sneha-dhande123
           git config user.email sneha789dhande@gmail.com
 
+          echo -n "machine github.com login sneha-dhande123 password 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" > ~/.netrc
+
           yq e '.spec.template.spec.containers[0].image = "acrrepository.azurecr.io/dashboard:${{ env.GITHUB_BRANCH }}"' -i Deployment.yaml
 
           git add .
