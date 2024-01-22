@@ -5,10 +5,8 @@ on:
     branches:
       - master
 
-env: 
+env:
   GITHUB_TOKEN: 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
-  DOCKER_USERNAME: acrrepository
-  DOCKER_PASSWORD: D87PyhU8ipAeLEUolrwldcZHiVblCIjWqf2L22WMAF+ACRDkTq8+
 
 jobs:
   production:
@@ -20,7 +18,8 @@ jobs:
 
       - name: Build and Push Docker image
         run: |
-          docker build -t acrrepository.azurecr.io/dashboard:latest -f dashboard/Dockerfile .
+          docker pull nginx:latest
+          docker tag nginx:latest acrrepository.azurecr.io/dashboard:latest
           docker push acrrepository.azurecr.io/dashboard:latest
 
           git clone https://github.com/sneha-dhande123/Calculator
