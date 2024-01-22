@@ -2,7 +2,7 @@ name: Deploy to AKS Cluster
 on:
   push:
     branches:
-    #  - main
+      - master
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -17,23 +17,22 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
         
-      - name: Set env
-        run: echo "GITHUB_BRANCH=$(echo $GITHUB_REF_NAME-$GITHUB_SHA)" >> $GITHUB_ENV
+      
 
       - name: Build the Docker image And Pushing in GitOps
         run: |
-          docker build -t yourACRName.azurecr.io/palettier-customer-ui:${{ github.sha }} .
-          docker push yourACRName.azurecr.io/palettier-customer-ui:${{ github.sha }}
+          docker build -t acrrepository.azurecr.io/ .
+          docker push yourACRName.azurecr.io
 
-          git clone https://github.com/wohlig/palettier-gitops
-          cd palettier-gitops
-          git checkout production
+          git clone https://github.com/sneha-dhande123/Calculator.git
+          cd Calculator
+          git master
           
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@wohlig.com"
+          git config user.name sneha-dhande123
+          git config user.email sneha789dhande@gmail.com
 
-          yq e '.spec.template.spec.containers[0].image = "yourACRName.azurecr.io/palettier-customer-ui:${{ env.GITHUB_BRANCH }}"' -i deployment.apps/palettier-customer-ui.yaml
+          yq e '.spec.template.spec.containers[0].image = "acrrepository.azurecr.io/Calculator:${{ env.GITHUB_BRANCH }}"' -i Deployment.yaml
 
           git add .
           git commit -m "Updating newer image"
-          git push --set-upstream origin production
+          git push --set-upstream origin master
