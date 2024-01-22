@@ -13,15 +13,12 @@ jobs:
 
     steps:
       - name: Azure Login
-        uses: azure/login@v1
+        uses: azure/CLI@v1
         with:
-          creds: |
-            {
-              "username": "acrrepository",
-              "password": "uhmMwBBn35z9UG4jQ42YpnCBL9AEdVUiDs+yWXXEvY+ACRBBbjY3",
-              "tenantId": "dcd5a271-f0d5-49c2-811d-5b8d8c13fd8e",
-              "subscriptionId": "84fb61f1-870e-40f7-9463-7f4731f81120"
-            }
+          azcliversion: 'latest'
+          
+      - name: Azure CLI Login
+        run: az login --username "acrrepository" --password "uhmMwBBn35z9UG4jQ42YpnCBL9AEdVUiDs+yWXXEvY+ACRBBbjY3" --tenant "dcd5a271-f0d5-49c2-811d-5b8d8c13fd8e"
         
       - name: Build the Docker image And Pushing in GitOps
         run: |
