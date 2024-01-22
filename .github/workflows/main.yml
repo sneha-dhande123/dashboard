@@ -12,14 +12,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Azure Login
+      - name: Azure CLI Login
         uses: azure/CLI@v1
         with:
           azcliversion: 'latest'
-          
-      - name: Azure CLI Login
-        run: az login --username "acrrepository" --password "uhmMwBBn35z9UG4jQ42YpnCBL9AEdVUiDs+yWXXEvY+ACRBBbjY3" --tenant "dcd5a271-f0d5-49c2-811d-5b8d8c13fd8e"
-        
+        run: az login --username "acrrepository" --password "D87PyhU8ipAeLEUolrwldcZHiVblCIjWqf2L22WMAF+ACRDkTq8+ " --tenant "dcd5a271-f0d5-49c2-811d-5b8d8c13fd8e"
+
       - name: Build the Docker image And Pushing in GitOps
         run: |
           docker build -t acrrepository.azurecr.io/ .
