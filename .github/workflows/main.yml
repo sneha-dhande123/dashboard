@@ -29,11 +29,11 @@ jobs:
           yq e '.spec.template.spec.containers[0].image = "acrrepository.azurecr.io/dashboard:latest"' -i Deployment.yaml
 
           # Configure Git with the GitHub token
-          git config --global credential.helper store
-          echo "https://github.com/${{ github.repository }}.git\nx-access-token:${{ secrets.GITHUB_TOKEN }}" > ~/.git-credentials
-
           git config --global user.name "sneha-dhande123"
           git config --global user.email "sneha789dhande@gmail.com"
+
+          # Set the Git credentials directly
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/sneha-dhande123/Calculator.git
 
           git add .
           git commit -m "Updating newer image"
