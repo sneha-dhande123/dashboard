@@ -18,23 +18,23 @@ jobs:
           docker pull nginx:latest
           docker tag nginx:latest acrrepository.azurecr.io/dashboard:latest
           docker push acrrepository.azurecr.io/dashboard:latest
-          
+
+      - name: Update Kubernetes Deployment
+        run: |
           git clone https://github.com/sneha-dhande123/Calculator
           cd Calculator
           git checkout master
-          
-        
 
+          # Update the image in the Kubernetes deployment file
           yq e '.spec.template.spec.containers[0].image = "acrrepository.azurecr.io/dashboard:latest"' -i Deployment.yaml
 
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+          # Configure Git with the GitHub token
+          git config --global credential.helper store
+          echo "https://github.com/${{ github.repository }}.git\nx-access-token:${{ secrets.GITHUB_TOKEN }}" > ~/.git-credentials
 
-          git config --global url."https://github.com/".insteadOf "https://${{ secrets.GITHUB_TOKEN }}@github.com/"
-          
           git config --global user.name "sneha-dhande123"
           git config --global user.email "sneha789dhande@gmail.com"
-          
-          
+
           git add .
           git commit -m "Updating newer image"
-          git push --set-upstream origin master
+          git push origin master
