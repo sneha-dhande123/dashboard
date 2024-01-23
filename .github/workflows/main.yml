@@ -34,6 +34,7 @@ jobs:
 
           # Set the Git remote URL using GitHub Actions secrets
           git remote set-url origin https://sneha-dhande123:${{ secrets.TOKEN }}@github.com/sneha-dhande123/Calculator.git
+
           git fetch --all
           git pull origin master
 
