@@ -33,7 +33,7 @@ jobs:
           git config --global user.email "sneha789dhande@gmail.com"
 
           # Set the Git credentials directly
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/sneha-dhande123/Calculator.git
+          git remote set-url origin https://sneha-dhande123:${{ secrets.GITHUB_TOKEN }}@github.com/sneha-dhande123/Calculator.git
 
           git add .
           git commit -m "Updating newer image"
