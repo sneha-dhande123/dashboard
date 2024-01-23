@@ -28,7 +28,7 @@ jobs:
           # Update the image in the Kubernetes deployment file
           yq e '.spec.template.spec.containers[0].image = "acrrepository.azurecr.io/dashboard:latest"' -i Deployment.yaml
 
-          git config --global user.name "sneha-dhande123"
+          git config --global user.name "https://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@github.com/sneha-dhande123"
           git config --global user.email "sneha789dhande@gmail.com"
 
           git fetch --all
