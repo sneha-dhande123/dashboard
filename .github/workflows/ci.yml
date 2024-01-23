@@ -13,11 +13,11 @@
 # limitations under the License.
 
 name: CI
-on:
-  push:
-    branches: [ master ]
-    paths-ignore:
-      - '**/*.md'
+#on:
+ # push:
+ #   branches: [ master ]
+#    paths-ignore:
+  #    - '**/*.md'
   pull_request:
     branches: [ master ]
     paths-ignore:
