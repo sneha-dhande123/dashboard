@@ -32,9 +32,13 @@ jobs:
           git config --global user.name "sneha-dhande123"
           git config --global user.email "sneha789dhande@gmail.com"
 
-          # Set the Git credentials directly
+          # Set the Git remote URL using GitHub Actions secrets
           git remote set-url origin https://sneha-dhande123:${{ secrets.TOKEN }}@github.com/sneha-dhande123/Calculator.git
+          git fetch --all
+          git pull origin master
 
           git add .
           git commit -m "Updating newer image"
           git push origin master
+        env:
+          TOKEN: ${{ secrets.TOKEN }}
