@@ -13,11 +13,11 @@
 # limitations under the License.
 
 name: CD
-on:
-  push:
-    branches: [ master ]
-  create:
-    tags:
+#on:
+ # push:
+ #   branches: [ master ]
+ # create:
+  #  tags:
       - 'v*.*.*'
 permissions:
   contents: read
