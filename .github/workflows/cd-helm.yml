@@ -13,10 +13,10 @@
 # limitations under the License.
 
 name: CD / Helm
-on:
-  push:
-    branches: [ master ]
-    paths:
+#on:
+  #push:
+    #branches: [ master ]
+    #paths:
     - 'charts/helm-chart/**'
     - 'hack/scripts/helm-release-chart.sh'
     - '.github/workflows/cd-helm.yml'
