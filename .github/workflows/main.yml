@@ -21,7 +21,7 @@ jobs:
 
       - name: Update Kubernetes Deployment
         run: |
-          git clone https://sneha-dhande123:${{ secrets.TOKEN }}@github.com/sneha-dhande123/Calculator
+          git clone https://github.com/sneha-dhande123/Calculator
           cd Calculator
           git checkout master
 
