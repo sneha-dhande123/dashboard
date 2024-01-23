@@ -23,36 +23,7 @@ jobs:
           cd Calculator
           git checkout master
           
-          mkdir -p ~/.ssh
-          echo "-----BEGIN OPENSSH PRIVATE KEY-----
-          b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAACFwAAAAdzc2gtcn
-          NhAAAAAwEAAQAAAgEAtWqiTK4XmJNGY45BnhXf5Cv6z3eknDcKnBZh4OtlgQ7nA3Tkzp//
-          38HsyXveuInIv1eAKp72i9nuQMyHezUkpLH4eB3zSgtnJvl9QXKhv/YmIOAntLn0a1DvSF
-          JmknZo1jhCMhPkszt9P0hpexF9WrN0VxDH/iQfu8LZKIMhiHOYXIbBcvSLJF8SAsGCC2T2
-          6Bt3VdlaZ+U0HiCOoT3iplSKpAq0P0iYCqd91Ppf0K6MXH3mhQW2zKnhW0nw6TCMpNh/AR
-          jJsc0gjXIinUcTwmzgUUQaHF8YcwFL90l6F+9uuVlz8lAHWy13Sy2L8GJZ2JyYcjSEZufc
-          oom2HePpReF4QjlQV91Vc7txbpTD/dUKxYz8dxY0MlkPfy8Le601R2DF2Pzpgy8Ycrd73j
-          K6akvDlFHQZJgWPliXWDA58X1snMxgAPwQs4oRbMvNKD9aIY08OGncSCZJuY3HFQcN8cWeU
-          10tYsdnl1hjEEN49k4UTOWsUVYxH8uIpjWcFmDqvDD3GY7jlMHUmwR+faofLyDl78RgqG
-          bWPF5AUwLWEDbCPNWBRa4iSsZrBPXTvYhsqPZ/lsEnszpoaNXV0rAm7znPukvZHLR8+woi
-          80Qe99pS3Z0trT/tUjLdXrPy+ybFKEjNzd7N2i/u2hYd3FuX1WFh5Ke6GubbjKkoIHrP0V
-          EAAAdQH+bxzx/m8c8AAAAHc3NoLXJzYQAAAgEAtWqiTK4XmJNGY45BnhXf5Cv6z3eknDcK
-          nBZh4OtlgQ7nA3Tkzp//38HsyXveuInIv1eAKp72i9nuQMyHezUkpLH4eB3zSgtnJvl9QX
-          Khv/YmIOAntLn0a1DvSFJmknZo1jhCMhPkszt9P0hpexF9WrN0VxDH/iQfu8LZKIMhiHOY
-          XIbBcvSLJF8SAsGCC2T26Bt3VdlaZ+U0HiCOoT3iplSKpAq0P0iYCqd91Ppf0K6MXH3mhQ
-          W2zKnhW0nw6TCMpNh/ARjJsc0gjXIinUcTwmzgUUQaHF8YcwFL90l6F+9uuVlz8lAHWy13
-          Sy2L8GJZ2JyYcjSEZufcoom2HePpReF4QjlQV91Vc7txbpTD/dUKxYz8dxY0MlkPfy8Le6
-          01R2DF2Pzpgy8Ycrd73jK6akvDlFHQZJgWPliXWDA58X1snMxgAPwQs4oRbMvNKD9aIY08
-          OGncSCZJuY3HFQcN8cWeU10tYsdnl1hjEEN49k4UTOWsUVYxH8uIpjWcFmDqvDD3GY7jlM
-          HUmwR+faofLyDl78RgqGbWPF5AUwLWEDbCPNWBRa4iSsZrBPXTvYhsqPZ/lsEnszpoaNXV
-          0rAm7znPukvZHLR8+woi80Qe99pS3Z0trT/tUjLdXrPy+ybFKEjNzd7N2i/u2hYd3FuX1W
-          Fh5Ke6GubbjKkoIHrP0VEAAAADAQABAAACAEDIenqddImkle85Po9gSlplpiPuGpc6RIym
-          pX83MEEc/DvMw2RR2IKj8pWkqU0GzuwdKASQTYR1Z1I2d2709Efn0c27DET1u3k8gJEdiU
-          tOcCEvSp6MBQ9JkJkn678Dj75nyqOtXO7wIHK3vgsXnMcF7FanBHPpnHdlRjzkTtY2
-          -----END OPENSSH PRIVATE KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          eval "$(ssh-agent -s)"
-          ssh-add ~/.ssh/id_rsa || exit 1
+        
 
           yq e '.spec.template.spec.containers[0].image = "acrrepository.azurecr.io/dashboard:latest"' -i Deployment.yaml
           
