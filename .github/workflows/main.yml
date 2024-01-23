@@ -25,6 +25,8 @@ jobs:
           cd Calculator
           git checkout master
           git config --global user.name "sneha-dhande123"
+          git config --global user.email "sneha789dhande@gmail.com"
+
 
           # Update the image in the Kubernetes deployment file
   #        yq e '.spec.template.spec.containers[0].image = "acrrepository.azurecr.io/dashboard:latest"' -i Deployment.yaml
