@@ -13,11 +13,11 @@
 # limitations under the License.
 
 name: CI / Web
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+#on:
+  #push:
+    #branches: [ master ]
+  #pull_request:
+    #branches: [ master ]
 permissions:
   contents: read
 jobs:
