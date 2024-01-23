@@ -27,6 +27,8 @@ jobs:
 
           yq e '.spec.template.spec.containers[0].image = "acrrepository.azurecr.io/dashboard:latest"' -i Deployment.yaml
 
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/dashboard
+
           git config --global url."https://github.com/".insteadOf "https://${{ secrets.GITHUB_TOKEN }}@github.com/"
           
           git config --global user.name "sneha-dhande123"
