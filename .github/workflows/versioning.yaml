@@ -15,12 +15,12 @@ jobs:
 
       - name: Set Image Tag
         run: |
-          CURRENT_DATE=$(date +'%Y%m%d')  # Get the current date in the format YYYY/MM/DD
-          MAJOR_VERSION="10"                 # Set the major version to 10
-          MINOR_VERSION=$((GITHUB_RUN_NUMBER / 1000))  # Calculate the minor version based on GITHUB_RUN_NUMBER
-          PATCH_VERSION=$((GITHUB_RUN_NUMBER % 1000))  # Calculate the patch version based on GITHUB_RUN_NUMBER
+          CURRENT_DATE=$(date +'%Y%m%d')
+          MAJOR_VERSION="10"               
+          MINOR_VERSION=$((GITHUB_RUN_NUMBER / 1000)) 
+          PATCH_VERSION=$((GITHUB_RUN_NUMBER % 1000)) 
 
-          # Replace colons in the date with underscores
+      
           CLEAN_DATE=$(echo $CURRENT_DATE | tr -d ':')
 
           IMAGE_TAG="${CLEAN_DATE}-v${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}"
