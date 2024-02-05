@@ -2,43 +2,40 @@ name: Deploy to AKS Cluster
 
 on:
   push:
-    #branches:
-    # - master
+    branches:
+      - master
 
 jobs:
   production:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Image Tag
+        run: echo "IMAGE_TAG=$(date +'%Y%m%d')-$((GITHUB_RUN_NUMBER))" >> $GITHUB_ENV
+
       - name: Docker Login
         run: docker login -u acrrepository -p D87PyhU8ipAeLEUolrwldcZHiVblCIjWqf2L22WMAF+ACRDkTq8+ acrrepository.azurecr.io
 
       - name: Build and Push Docker image
         run: |
           docker pull nginx:latest
-          docker tag nginx:latest acrrepository.azurecr.io/dashboard:latest
-          docker push acrrepository.azurecr.io/dashboard:latest
+          docker tag nginx:latest acrrepository.azurecr.io/dashboard:$IMAGE_TAG
+          docker push acrrepository.azurecr.io/dashboard:$IMAGE_TAG
 
       - name: Update Kubernetes Deployment
         run: |
           git clone https://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@github.com/sneha-dhande123/Calculator
           cd Calculator
           git checkout master
-          yq e '.spec.template.spec.containers[0].image = "acrrepository.azurecr.io/dashboard:latest"' -i Deployment.yaml
+          yq e '.spec.template.spec.containers[0].image = "acrrepository.azurecr.io/dashboard:$IMAGE_TAG"' -i Deployment.yaml
+          
           git config --global user.name "sneha-dhande123"
           git config --global user.email "sneha789dhande@gmail.com"
-
-
-          # Update the image in the Kubernetes deployment file
-  #        yq e '.spec.template.spec.containers[0].image = "acrrepository.azurecr.io/dashboard:latest"' -i Deployment.yaml
-
-        #  git config --global user.email "sneha789dhande@gmail.com"
-
-     #     git fetch --all
-      #    git pull origin master
-
- #         git add .
-  #        git commit -m "Updating newer image"
-   #       git push origin master
-    #    env:
-     #     TOKEN: ${{ secrets.TOKEN }}
+          git add .
+          git commit -m "Updating newer image with tag $IMAGE_TAG"
+          git push origin master
+        env:
+          TOKEN: ${{ secrets.TOKEN }}
