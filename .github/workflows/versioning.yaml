@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  demo:
+  demo-1:
     runs-on: ubuntu-latest
 
     steps:
