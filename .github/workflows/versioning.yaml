@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  push-acr:
+  push-acr-1:
     runs-on: ubuntu-latest
 
     steps:
