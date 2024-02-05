@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - master
+env:
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  ACR_REGISTRY: acrrepository.azurecr.io
 
 jobs:
   push-acr-0:
@@ -29,7 +33,7 @@ jobs:
           echo "Generated IMAGE_TAG: $IMAGE_TAG"
 
       - name: Docker Login
-        run: docker login -u acrrepository -p D87PyhU8ipAeLEUolrwldcZHiVblCIjWqf2L22WMAF+ACRDkTq8+ acrrepository.azurecr.io
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $ACR_REGISTRY
 
       - name: Build and Push Docker image
         run: |
