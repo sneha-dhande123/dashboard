@@ -1,4 +1,4 @@
-name: pushing image to ACR
+name: Pushing Image to ACR
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  demo-1:
+  build-and-push:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,13 +15,13 @@ jobs:
 
       - name: Set Image Tag
         run: |
-          CURRENT_DATE=$(date +'%Y%m%d')
-          MAJOR_VERSION="10"
-          MINOR_VERSION="0"
-          PATCH_VERSION=$((GITHUB_RUN_NUMBER % 9 + 1))
-          
-          IMAGE_TAG="v${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}-${CURRENT_DATE}"
-          
+          CURRENT_DATE=$(date +'%Y/%m/%d')  # Get the current date in the format YYYY/MM/DD
+          MAJOR_VERSION="10"                 # Set the major version to 10
+          MINOR_VERSION=$((GITHUB_RUN_NUMBER / 1000))  # Calculate the minor version based on GITHUB_RUN_NUMBER
+          PATCH_VERSION=$((GITHUB_RUN_NUMBER % 1000))  # Calculate the patch version based on GITHUB_RUN_NUMBER
+
+          IMAGE_TAG="${CURRENT_DATE}-v${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}"
+
           echo "IMAGE_TAG=${IMAGE_TAG}" >> $GITHUB_ENV
           echo "Generated IMAGE_TAG: $IMAGE_TAG"
 
