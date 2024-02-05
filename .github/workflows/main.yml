@@ -2,8 +2,8 @@ name: Deploy to AKS Cluster
 
 on:
   push:
-    branches:
-      - master
+   # branches:
+     # - master
 
 jobs:
   production:
