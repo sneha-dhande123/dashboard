@@ -1,0 +1,26 @@
+name: pushing imagr to ACR
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  production:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Image Tag
+        run: echo "IMAGE_TAG=$(date +'%Y%m%d')-$((GITHUB_RUN_NUMBER))" >> $GITHUB_ENV
+
+      - name: Docker Login
+        run: docker login -u acrrepository -p D87PyhU8ipAeLEUolrwldcZHiVblCIjWqf2L22WMAF+ACRDkTq8+ acrrepository.azurecr.io
+
+      - name: Build and Push Docker image
+        run: |
+          docker pull nginx:latest
+          docker tag nginx:latest acrrepository.azurecr.io/dashboard:$IMAGE_TAG
+          docker push acrrepository.azurecr.io/dashboard:$IMAGE_TAG
