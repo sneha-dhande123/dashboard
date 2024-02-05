@@ -7,7 +7,10 @@ on:
 jobs:
   production:
     runs-on: ubuntu-latest
-
+env:
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  ACR_REGISTRY: acrrepository.azurecr.io
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -16,7 +19,7 @@ jobs:
         run: echo "IMAGE_TAG=$(date +'%Y%m%d')-$((GITHUB_RUN_NUMBER))" >> $GITHUB_ENV
 
       - name: Docker Login
-        run: docker login -u acrrepository -p D87PyhU8ipAeLEUolrwldcZHiVblCIjWqf2L22WMAF+ACRDkTq8+ acrrepository.azurecr.io
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $ACR_REGISTRY
 
       - name: Build and Push Docker image
         run: |
