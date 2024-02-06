@@ -38,7 +38,7 @@ jobs:
           echo "::set-output name=IMAGE_TAG::$IMAGE_TAG"
 
       - name: Docker Login
-        run: docker login -u ${{ secrets.ACRUsername }} -p ${{ secrets.ACRPassword }} acrrepository.azurecr.io
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} acrrepository.azurecr.io
             
       - name: Docker Compose Build 
         working-directory: .
