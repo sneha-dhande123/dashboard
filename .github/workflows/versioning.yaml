@@ -1,9 +1,15 @@
 name: Pushing Image to ACR
 
 on:
-  push:
-    branches:
-      - master
+  # release:
+  #    types: [published]
+  schedule:
+    - cron:  '5 18 * * *' # Triggers the workflow every day at 18:05 UTC
+  # push:
+  #   branches:
+  #     - master
+  workflow_dispatch:
+
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
