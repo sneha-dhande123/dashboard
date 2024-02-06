@@ -1,10 +1,8 @@
 name: Build & push API image to ACR and recreate AKS
 
 on:
-
-   
   workflow_dispatch:
-  
+
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
@@ -33,6 +31,9 @@ jobs:
           ORDER_NUMBER=$((GITHUB_RUN_NUMBER))
           IMAGE_TAG="${CURRENT_DATE}-v${ORDER_NUMBER}"
           echo "::set-output name=IMAGE_TAG::$IMAGE_TAG"
+
+      - name: Log Image Tag
+        run: echo "Generated Image Tag: ${{ steps.generate_image_tag.outputs.IMAGE_TAG }}"
 
       - name: Docker Login
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $ACR_REGISTRY
