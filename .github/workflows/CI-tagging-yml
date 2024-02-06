@@ -1,0 +1,50 @@
+name: Build & push API image to ACR and recreate AKS
+
+on:
+  # release:
+  #    types: [published]
+  schedule:
+    - cron:  '5 18 * * *' # Triggers the workflow every day at 18:05 UTC
+  # push:
+  #   branches:
+  #     - master
+  workflow_dispatch:
+
+jobs:
+  docker_build_and_push:
+    name: AKS deploy after build and push api image to ACR
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with: 
+            ref: master
+
+      - name: Setup .Net
+        uses: actions/setup-dotnet@v2
+        with:
+            dotnet-version: 7.0.x
+
+      - name: Generate Image Tag
+        run: |
+          CURRENT_DATE=$(date +'%Y%m%d')
+          ORDER_NUMBER=$((GITHUB_RUN_NUMBER))
+          IMAGE_TAG="${CURRENT_DATE}-v${ORDER_NUMBER}"
+          echo "::set-output name=IMAGE_TAG::$IMAGE_TAG"
+
+      - name: Docker Login
+        run: docker login -u ${{ secrets.ACRUsername }} -p ${{ secrets.ACRPassword }} az204containerregistery.azurecr.io
+            
+      - name: Docker Compose Build 
+        working-directory: ./Znode.Multifront
+        run: docker compose build
+        
+      - name: Docker Compose Push 
+        working-directory: ./Znode.Multifront
+        run: docker compose push --ignore-push-failures
+         
+      - name: Docker Logout
+        if: always()
+        continue-on-error: true
+        run: docker logout az204containerregistery.azurecr.io
