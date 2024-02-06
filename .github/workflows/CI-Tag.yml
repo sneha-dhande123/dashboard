@@ -2,7 +2,7 @@ name: Build & push API image to ACR and recreate AKS
 
 on:
   workflow_dispatch:
-
+  
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
@@ -36,15 +36,15 @@ jobs:
         run: echo "Generated Image Tag: ${{ steps.generate_image_tag.outputs.IMAGE_TAG }}"
 
       - name: Docker Login
-        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $ACR_REGISTRY
+        run: |
+          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin $ACR_REGISTRY
             
       - name: Docker Compose Build 
         run: docker-compose build
         
       - name: Tag and Push Image
         run: |
-          docker tag znode10xapiimage:${{ steps.generate_image_tag.outputs.IMAGE_TAG }} $ACR_REGISTRY/znode10xapiimage:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
-          docker push $ACR_REGISTRY/znode10xapiimage:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
+          docker-compose push
          
       - name: Docker Logout
         if: always()
