@@ -9,6 +9,10 @@ on:
   #   branches:
   #     - master
   workflow_dispatch:
+env:
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  ACR_REGISTRY: acrrepository.azurecr.io
 
 jobs:
   docker_build_and_push:
@@ -34,17 +38,17 @@ jobs:
           echo "::set-output name=IMAGE_TAG::$IMAGE_TAG"
 
       - name: Docker Login
-        run: docker login -u ${{ secrets.ACRUsername }} -p ${{ secrets.ACRPassword }} az204containerregistery.azurecr.io
+        run: docker login -u ${{ secrets.ACRUsername }} -p ${{ secrets.ACRPassword }} acrrepository.azurecr.io
             
       - name: Docker Compose Build 
-        working-directory: ./Znode.Multifront
+        working-directory: .
         run: docker compose build
         
       - name: Docker Compose Push 
-        working-directory: ./Znode.Multifront
+        working-directory: .
         run: docker compose push --ignore-push-failures
          
       - name: Docker Logout
         if: always()
         continue-on-error: true
-        run: docker logout az204containerregistery.azurecr.io
+        run: docker logout acrrepository.azurecr.io
