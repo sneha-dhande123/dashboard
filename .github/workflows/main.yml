@@ -1,43 +1,49 @@
-name: Deploy to AKS Cluster
+name: Build & push API image to ACR and recreate AKS
 
 on:
-
-
   workflow_dispatch:
-jobs:
-  production:
-    runs-on: ubuntu-latest
+  
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
   ACR_REGISTRY: acrrepository.azurecr.io
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
 
-      - name: Set Image Tag
-        run: echo "IMAGE_TAG=$(date +'%Y%m%d')-$((GITHUB_RUN_NUMBER))" >> $GITHUB_ENV
+jobs:
+  docker_build_and_push:
+    name: AKS deploy after build and push API image to ACR
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with: 
+            ref: master
+
+      - name: Setup .Net
+        uses: actions/setup-dotnet@v2
+        with:
+            dotnet-version: 7.0.x
+
+      - name: Generate Image Tag
+        id: generate_image_tag
+        run: |
+          CURRENT_DATE=$(date +'%Y%m%d')
+          ORDER_NUMBER=$((GITHUB_RUN_NUMBER))
+          IMAGE_TAG="${CURRENT_DATE}-v${ORDER_NUMBER}"
+          echo "::set-output name=IMAGE_TAG::$IMAGE_TAG"
 
       - name: Docker Login
-        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $ACR_REGISTRY
-
-      - name: Build and Push Docker image
+        run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin $ACR_REGISTRY
+            
+      - name: Docker Compose Build 
+        run: docker-compose build
+        
+      - name: Tag and Push Image
         run: |
-          docker pull nginx:latest
-          docker tag nginx:latest acrrepository.azurecr.io/dashboard:$IMAGE_TAG
-          docker push acrrepository.azurecr.io/dashboard:$IMAGE_TAG
-
-      - name: Update Kubernetes Deployment
-        run: |
-          git clone https://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@github.com/sneha-dhande123/Calculator
-          cd Calculator
-          git checkout master
-          yq e '.spec.template.spec.containers[0].image = "acrrepository.azurecr.io/dashboard:$IMAGE_TAG"' -i Deployment.yaml
-          
-          git config --global user.name "sneha-dhande123"
-          git config --global user.email "sneha789dhande@gmail.com"
-          git add .
-          git commit -m "Updating newer image with tag $IMAGE_TAG"
-          git push origin master
-        env:
-          TOKEN: ${{ secrets.TOKEN }}
+          docker tag znode10xapiimage:${{ steps.generate_image_tag.outputs.IMAGE_TAG }} $ACR_REGISTRY/znode10xapiimage:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
+          docker push $ACR_REGISTRY/znode10xapiimage:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
+         
+      - name: Docker Logout
+        if: always()
+        continue-on-error: true
+        run: docker logout $ACR_REGISTRY
