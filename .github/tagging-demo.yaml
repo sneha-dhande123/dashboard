@@ -1,9 +1,14 @@
 name: Deploy to AKS Cluster
 
 on:
-  push:
-    branches:
-      - master
+  # release:
+  #    types: [published]
+  schedule:
+    - cron:  '5 18 * * *' # Triggers the workflow every day at 18:05 UTC
+  # push:
+  #   branches:
+  #     - master
+  workflow_dispatch:
 
 jobs:
   production:
