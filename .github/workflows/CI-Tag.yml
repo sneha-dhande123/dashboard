@@ -1,14 +1,10 @@
 name: Build & push API image to ACR and recreate AKS
 
 on:
-  # release:
-  #    types: [published]
   schedule:
-    - cron:  '5 18 * * *' # Triggers the workflow every day at 18:05 UTC
-  # push:
-  #   branches:
-  #     - master
+   
   workflow_dispatch:
+  
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
@@ -31,6 +27,7 @@ jobs:
             dotnet-version: 7.0.x
 
       - name: Generate Image Tag
+        id: generate_image_tag
         run: |
           CURRENT_DATE=$(date +'%Y%m%d')
           ORDER_NUMBER=$((GITHUB_RUN_NUMBER))
@@ -38,17 +35,17 @@ jobs:
           echo "::set-output name=IMAGE_TAG::$IMAGE_TAG"
 
       - name: Docker Login
-        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} acrrepository.azurecr.io
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $ACR_REGISTRY
             
       - name: Docker Compose Build 
-        working-directory: .
-        run: docker compose build
+        run: docker-compose build
         
-      - name: Docker Compose Push 
-        working-directory: .
-        run: docker compose push --ignore-push-failures
+      - name: Tag and Push Image
+        run: |
+          docker tag znode10xapiimage:${{ steps.generate_image_tag.outputs.IMAGE_TAG }} $ACR_REGISTRY/znode10xapiimage:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
+          docker push $ACR_REGISTRY/znode10xapiimage:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
          
       - name: Docker Logout
         if: always()
         continue-on-error: true
-        run: docker logout acrrepository.azurecr.io
+        run: docker logout $ACR_REGISTRY
