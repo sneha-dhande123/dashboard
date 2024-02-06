@@ -1,7 +1,7 @@
 name: Build & push API image to ACR and recreate AKS
 
 on:
-  schedule:
+
    
   workflow_dispatch:
   
