@@ -10,7 +10,7 @@ env:
   ACR_REGISTRY: acrrepository.azurecr.io
 
 jobs:
-  push-acr-0:
+  push-acr-image:
     runs-on: ubuntu-latest
 
     steps:
