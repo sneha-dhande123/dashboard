@@ -2,7 +2,7 @@ name: Build & push API image to ACR and recreate AKS
 
 on:
   workflow_dispatch:
-
+  
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
@@ -19,10 +19,10 @@ jobs:
         with: 
             ref: master
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Setup .Net
+        uses: actions/setup-dotnet@v2
         with:
-          node-version: '14'
+            dotnet-version: 7.0.x
 
       - name: Generate Image Tag
         id: generate_image_tag
@@ -39,9 +39,10 @@ jobs:
         
       - name: Tag and Push Image
         run: |
-          docker tag znode10xapi:latest $ACR_REGISTRY/znode10xapi:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
-          docker push $ACR_REGISTRY/znode10xapi:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
+          docker tag znode10xapiimage:${{ steps.generate_image_tag.outputs.IMAGE_TAG }} $ACR_REGISTRY/znode10xapiimage:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
+          docker push $ACR_REGISTRY/znode10xapiimage:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
          
       - name: Docker Logout
         if: always()
+        continue-on-error: true
         run: docker logout $ACR_REGISTRY
