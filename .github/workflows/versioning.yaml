@@ -18,6 +18,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Set Image Tag
+        run: echo "IMAGE_TAG=$(date +'%Y%m%d')-$((GITHUB_REF_NAME-$GITHUB_SHA))" >> $GITHUB_ENV
+
       #- name: Set Image Tag
         #id: generate_image_tag
         #run: |
@@ -41,6 +44,6 @@ jobs:
           docker pull nginx:latest
           #docker tag nginx:latest $ACR_REGISTRY/dashboard:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
           #docker push $ACR_REGISTRY/dashboard:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
-          docker tag nginx:latest $ACR_REGISTRY/dashboard:$GITHUB_REF_NAME-$GITHUB_SHA . 
-          docker push $ACR_REGISTRY/dashboard:$GITHUB_REF_NAME-$GITHUB_SHA
+          docker tag nginx:latest $ACR_REGISTRY/dashboard:$IMAGE_TAG
+          docker push $ACR_REGISTRY/dashboard:$IMAGE_TAG
           
