@@ -51,4 +51,4 @@ jobs:
 
       - name: Kubernetes Create Deploy
         working-directory: .
-        run: kubectl create -f deployment.yaml
+        run: kubectl create -f Deployment.yml
