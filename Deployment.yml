@@ -17,7 +17,7 @@ spec:
         app: myapp
     spec:
       containers:
-      - image:  acrrepository.azurecr.io/dashboard:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
+      - image: acrrepository.azurecr.io/dashboard:20240207-v10.0.44
         name: snehaapp
 ---
 apiVersion: v1
