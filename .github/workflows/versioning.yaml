@@ -38,6 +38,10 @@ jobs:
           docker tag nginx:latest $ACR_REGISTRY/dashboard:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
           docker push $ACR_REGISTRY/dashboard:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
 
+      - name: Kubernetes Delete Deploy
+        working-directory: .
+        run: kubectl delete -f Depoyment.yml
+
 
 
 
