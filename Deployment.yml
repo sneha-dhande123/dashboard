@@ -17,8 +17,9 @@ spec:
     spec:
       containers:
 
-      # - image: ${ACR_REGISTRY}/dashboard:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
-      - image: nginx
+      - image: ${ACR_REGISTRY}/dashboard:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
+
+        imagePullPolicy: always
   
 
         name: snehaapp
