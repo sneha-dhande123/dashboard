@@ -41,9 +41,9 @@ jobs:
 
       - name: Build and Push Docker image
         run: |
-          docker pull nginx:latest
-          #docker tag nginx:latest $ACR_REGISTRY/dashboard:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
+          docker pull apache:latest
+          #docker tag apache:latest $ACR_REGISTRY/dashboard:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
           #docker push $ACR_REGISTRY/dashboard:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
-          docker tag nginx:latest $ACR_REGISTRY/dashboard:$IMAGE_TAG
+          docker tag apache:latest $ACR_REGISTRY/dashboard:$IMAGE_TAG
           docker push $ACR_REGISTRY/dashboard:$IMAGE_TAG
           
