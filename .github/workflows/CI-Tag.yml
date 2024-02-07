@@ -37,4 +37,4 @@ jobs:
         run: |
           docker pull nginx:latest
           docker tag nginx:latest acrrepository.azurecr.io/dashboard:$IMAGE_TAG
-          docker push acrrepository.azurecr.io/dashboard:$IMAGE_T
+          docker push acrrepository.azurecr.io/dashboard:$IMAGE_TAG
