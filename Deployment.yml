@@ -1,4 +1,3 @@
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -19,8 +18,8 @@ spec:
       containers:
       - image: $ACR_REGISTRY/dashboard:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
         name: snehaapp
-        imagePullSecrets:
-        - name: acr-credentials
+      imagePullSecrets:          
+      - name: acr-credentials
 ---
 apiVersion: v1
 kind: Service
