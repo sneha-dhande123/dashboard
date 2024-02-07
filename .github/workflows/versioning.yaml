@@ -18,25 +18,27 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set Image Tag
-        id: generate_image_tag
-        run: |
-          CURRENT_DATE=$(date +'%Y%m%d')
-          MAJOR_VERSION="10"
-          MINOR_VERSION=$((GITHUB_RUN_NUMBER / 1000))
-          PATCH_VERSION=$((GITHUB_RUN_NUMBER % 1000))
-          CLEAN_DATE=$(echo $CURRENT_DATE | tr -d ':')
-          IMAGE_TAG="${CLEAN_DATE}-v${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}"
-          echo "::set-output name=IMAGE_TAG::$IMAGE_TAG"
-          echo "Generated IMAGE_TAG: $IMAGE_TAG"
+      # - name: Set Image Tag
+      #   id: generate_image_tag
+      #   run: |
+      #     CURRENT_DATE=$(date +'%Y%m%d')
+      #     MAJOR_VERSION="10"
+      #     MINOR_VERSION=$((GITHUB_RUN_NUMBER / 1000))
+      #     PATCH_VERSION=$((GITHUB_RUN_NUMBER % 1000))
+      #     CLEAN_DATE=$(echo $CURRENT_DATE | tr -d ':')
+      #     IMAGE_TAG="${CLEAN_DATE}-v${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}"
+      #     echo "::set-output name=IMAGE_TAG::$IMAGE_TAG"
+      #     echo "Generated IMAGE_TAG: $IMAGE_TAG"
       - name: Docker Login
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $ACR_REGISTRY
 
       - name: Build and Push Docker image
         run: |
           docker pull nginx:latest
-          docker tag nginx:latest $ACR_REGISTRY/dashboard:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
-          docker push $ACR_REGISTRY/dashboard:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
+          # docker tag nginx:latest $ACR_REGISTRY/dashboard:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
+          # docker push $ACR_REGISTRY/dashboard:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
+           docker tag nginx:latest $ACR_REGISTRY/dashboard:${{ github.sha }}
+           docker push $ACR_REGISTRY/dashboard:${{ github.sha }}
 
 
 
