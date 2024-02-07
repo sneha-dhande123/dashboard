@@ -49,9 +49,9 @@ jobs:
           kubeconfig: ${{ secrets.KUBECONFIG }}
           version: '1.28.0'
 
-      - name: Kubernetes Delete Deploy
-        working-directory: .
-        run: kubectl delete -f Deployment.yml
+      # - name: Kubernetes Delete Deploy
+      #   working-directory: .
+      #   run: kubectl delete -f Deployment.yml
 
 
 
