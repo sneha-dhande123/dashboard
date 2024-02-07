@@ -19,7 +19,7 @@ spec:
 
       - image: ${ACR_REGISTRY}/dashboard:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
 
-        imagePullPolicy: always
+        imagePullPolicy: Always
   
 
         name: snehaapp
