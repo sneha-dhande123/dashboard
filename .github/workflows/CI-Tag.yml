@@ -33,10 +33,10 @@ jobs:
 
       - name: Docker Login
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $ACR_REGISTRY
+
       - name: Build and Push Docker image
         run: |
           docker pull nginx:latest
           docker tag nginx:latest acrrepository.azurecr.io/dashboard:$IMAGE_TAG
           docker push acrrepository.azurecr.io/dashboard:$IMAGE_TAG
-
 
