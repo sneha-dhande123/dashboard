@@ -17,8 +17,8 @@ spec:
         app: myapp
     spec:
       containers:
-      - image: 
-        name: nginx
+      - image:  acrrepository.azurecr.io/dashboard:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
+        name: snehaapp
 ---
 apiVersion: v1
 kind: Service
