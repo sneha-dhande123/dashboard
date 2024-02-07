@@ -37,3 +37,18 @@ jobs:
           docker pull nginx:latest
           docker tag nginx:latest $ACR_REGISTRY/dashboard:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
           docker push $ACR_REGISTRY/dashboard:${{ steps.generate_image_tag.outputs.IMAGE_TAG }}
+
+
+
+
+      - name: Kubernetes Set up
+        uses: azure/k8s-set-context@v1
+        with:
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+          version: '1.28.0'
+
+
+
+      - name: Kubernetes Create Deploy
+        working-directory: .
+        run: kubectl create -f deployment.yaml
