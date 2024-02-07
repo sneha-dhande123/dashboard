@@ -24,12 +24,16 @@ jobs:
         with:
             dotnet-version: 7.0.x
 
-      - name: Generate Image Tag
-        id: generate_image_tag
+      - name: Set Image Tag
         run: |
           CURRENT_DATE=$(date +'%Y%m%d')
-          IMAGE_TAG="${CURRENT_DATE}-v${{ github.run_number }}"
-          echo "::set-output name=IMAGE_TAG::$IMAGE_TAG"
+          MAJOR_VERSION="10"               
+          MINOR_VERSION=$((GITHUB_RUN_NUMBER / 1000)) 
+          PATCH_VERSION=$((GITHUB_RUN_NUMBER % 1000)) 
+      
+          CLEAN_DATE=$(echo $CURRENT_DATE | tr -d ':')
+
+          IMAGE_TAG="${CLEAN_DATE}-v${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}"
 
       - name: Docker Login
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $ACR_REGISTRY
