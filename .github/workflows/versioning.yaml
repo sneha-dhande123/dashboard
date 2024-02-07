@@ -3,7 +3,7 @@ name: Pushing Image to ACR
 on:
   # schedule:
   #   - cron: '5 18 * * *' # Triggers the workflow every day at 18:05 UTC
-  workflow_dispatch:
+                                                                            workflow_dispatch:
 
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
